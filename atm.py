@@ -9,7 +9,10 @@ class ATM():
         number_card = input("Input your card number: ")
         while True:
             if SQL_atm.input_card(number_card):
-                print("True")
+                if SQL_atm.input_code(number_card):
+                    print("True")
+                else:
+                    break
             else:
                 break
 
