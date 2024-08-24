@@ -21,3 +21,20 @@ class SQL_atm:
             cur = db.cursor()
             cur.execute("""INSERT INTO Users_data (Number_card, Pin_code, Balance) VALUES(?, ?, ?);""", data_users)
             print("Create new user")
+
+    """Inser and check card"""
+    @staticmethod
+    def input_card(number_card):
+        try:
+            with sqlite3.connect("atm.db") as db:
+                cur = db.cursor()
+                cur.execute(f"""SELECT Number_card FROM Users_data WHERE Number_card = {number_card}""")
+                result_card = cur.fetchone()
+                if result_card == None:
+                    print("Insert unknown number of card")
+                    return False
+                else:
+                    print(f"Insert number card {number_card}")
+                    return True
+        except:
+            print("You entered an incorrect card number")
