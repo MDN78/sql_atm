@@ -1,4 +1,4 @@
-## ATM simulation
+## ATM simulation - console program.
 
 - [x] Get balance
 - [x] Withdraw money
