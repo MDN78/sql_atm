@@ -10,11 +10,12 @@ class ATM():
         while True:
             if SQL_atm.input_card(number_card):
                 if SQL_atm.input_code(number_card):
-                    print("True")
+                    SQL_atm.info_balance(number_card)
                 else:
                     break
             else:
                 break
+
 
 start = ATM()
 start.atm_logic()

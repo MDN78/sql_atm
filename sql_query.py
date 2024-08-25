@@ -59,3 +59,13 @@ class SQL_atm:
             except:
                 print("Wrong pin-code")
                 return False
+
+    @staticmethod
+    def info_balance(number_card):
+        """Card balance"""
+        with sqlite3.connect("atm.db") as db:
+            cur = db.cursor()
+            cur.execute(f"""SELECT Balance FROM Users_data WHERE Number_card = {number_card}""")
+            result_info_balance = cur.fetchone()
+            balance_card = result_info_balance[0]
+            print(f"Card balance: {balance_card}")
