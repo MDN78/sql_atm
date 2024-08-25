@@ -133,4 +133,4 @@ class SQL_atm:
                 return False
 
             else:
-                print("Wrong operation. Goodbye!")
+                print("Wrong operation. Try another operation!")
