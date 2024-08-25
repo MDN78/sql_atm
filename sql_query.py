@@ -84,7 +84,8 @@ class SQL_atm:
                     print("Account has insufficient funds")
                     return False
                 else:
-                    cur.execute(f"""UPDATE Users_data SET Balance = Balance - {amount} WHERE Number_card = {number_card};""")
+                    cur.execute(
+                        f"""UPDATE Users_data SET Balance = Balance - {amount} WHERE Number_card = {number_card};""")
                     db.commit()
                     SQL_atm.info_balance(number_card)
                     return True
@@ -92,5 +93,3 @@ class SQL_atm:
             except:
                 print("Wrong action with balance")
                 return False
-
-
