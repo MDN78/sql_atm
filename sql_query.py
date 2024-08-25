@@ -112,23 +112,25 @@ class SQL_atm:
     @staticmethod
     def input_operation(number_card):
         """Operation menu"""
-        operation = input("Operation menu: \n"
-                          "1. Get balance\n"
-                          "2. Withdraw money\n"
-                          "3. Deposit money\n"
-                          "4. Exit\n")
+        while True:
+            operation = input("Operation menu: \n"
+                              "1. Get balance\n"
+                              "2. Withdraw money\n"
+                              "3. Deposit money\n"
+                              "4. Exit\n")
 
-        if operation == '1':
-            SQL_atm.info_balance(number_card)
+            if operation == '1':
+                SQL_atm.info_balance(number_card)
 
-        elif operation == '2':
-            SQL_atm.withdraw_money(number_card)
+            elif operation == '2':
+                SQL_atm.withdraw_money(number_card)
 
-        elif operation == '3':
-            SQL_atm.deposit_money(number_card)
+            elif operation == '3':
+                SQL_atm.deposit_money(number_card)
 
-        elif operation == '4':
-            print("Thanks! Goodbye!")
+            elif operation == '4':
+                print("Thanks! Goodbye!")
+                return False
 
-        else:
-            print("Wrong operation. Goodbye!")
+            else:
+                print("Wrong operation. Goodbye!")
