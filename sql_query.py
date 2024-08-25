@@ -73,7 +73,7 @@ class SQL_atm:
     @staticmethod
     def withdraw_money(number_card):
         """Withdrawing money"""
-        amount = input("Input summ: ")
+        amount = input("Input withdraw summ: ")
         with sqlite3.connect("atm.db") as db:
             cur = db.cursor()
             cur.execute(f"""SELECT Balance FROM Users_data WHERE Number_card = {number_card};""")
@@ -90,6 +90,21 @@ class SQL_atm:
                     SQL_atm.info_balance(number_card)
                     return True
 
+            except:
+                print("Wrong action with balance")
+                return False
+
+    @staticmethod
+    def deposit_money(number_card):
+        """Deposit money to account"""
+        amount = input("Input deposit summ: ")
+        with sqlite3.connect("atm.db") as db:
+            try:
+                cur = db.cursor()
+                cur.execute(
+                    f"""UPDATE Users_data SET Balance = Balance + {amount} WHERE Number_card = {number_card};""")
+                db.commit()
+                SQL_atm.info_balance(number_card)
             except:
                 print("Wrong action with balance")
                 return False
