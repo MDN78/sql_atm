@@ -111,6 +111,7 @@ class SQL_atm:
 
     @staticmethod
     def transfer_money(number_card):
+        """Transfer money between accounts"""
         account = input("Input number card to transfer money: ")
         result = SQL_atm.input_card(account)
         if result:
