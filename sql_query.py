@@ -1,5 +1,6 @@
 import sqlite3
 
+
 class SQL_atm:
 
     @staticmethod
@@ -111,7 +112,32 @@ class SQL_atm:
     @staticmethod
     def transfer_money(number_card):
         account = input("Input number card to transfer money: ")
-        pass
+        result = SQL_atm.input_card(account)
+        if result:
+            transfer_summ = input("Input summ to transfer: ")
+            with sqlite3.connect("atm.db") as db:
+                cur = db.cursor()
+                cur.execute(f"""SELECT Balance FROM Users_data WHERE Number_card = {number_card};""")
+                result_info_balance = cur.fetchone()
+                balance_card = result_info_balance[0]
+                try:
+
+                    if int(transfer_summ) > balance_card:
+                        print("Account has insufficient funds")
+                        return False
+                    else:
+                        cur.execute(
+                            f"""UPDATE Users_data SET Balance = Balance - {transfer_summ} WHERE Number_card = {number_card};""")
+                        cur.execute(
+                            f"""UPDATE Users_data SET Balance = Balance + {transfer_summ} WHERE Number_card = {account};""")
+                        db.commit()
+                        SQL_atm.info_balance(number_card)
+                        return True
+                except:
+                    print("Wrong action with balance")
+                    return False
+        else:
+            print("There is no user with this card number!")
 
     @staticmethod
     def input_operation(number_card):
