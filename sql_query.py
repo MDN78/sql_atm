@@ -1,6 +1,5 @@
 import sqlite3
 
-
 class SQL_atm:
 
     @staticmethod
@@ -110,6 +109,11 @@ class SQL_atm:
                 return False
 
     @staticmethod
+    def transfer_money(number_card):
+        account = input("Input number card to transfer money: ")
+        pass
+
+    @staticmethod
     def input_operation(number_card):
         """Operation menu"""
         while True:
@@ -117,7 +121,8 @@ class SQL_atm:
                               "1. Get balance\n"
                               "2. Withdraw money\n"
                               "3. Deposit money\n"
-                              "4. Exit\n")
+                              "4. Exit\n"
+                              "5. Transfer money\n")
 
             if operation == '1':
                 SQL_atm.info_balance(number_card)
@@ -131,6 +136,9 @@ class SQL_atm:
             elif operation == '4':
                 print("Thanks! Goodbye!")
                 return False
+
+            elif operation == '5':
+                SQL_atm.transfer_money(number_card)
 
             else:
                 print("Wrong operation. Try another operation!")
