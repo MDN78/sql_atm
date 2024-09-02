@@ -1,4 +1,8 @@
+import csv
+import datetime
 import sqlite3
+
+now_data = datetime.datetime.now(datetime.UTC).strftime("%H:%M-%d.%m.%Y")
 
 
 class SQL_atm:
@@ -105,6 +109,7 @@ class SQL_atm:
                     f"""UPDATE Users_data SET Balance = Balance + {amount} WHERE Number_card = {number_card};""")
                 db.commit()
                 SQL_atm.info_balance(number_card)
+                SQL_atm.report_operation_1(now_data, number_card, "2", amount, "")
             except:
                 print("Wrong action with balance")
                 return False
@@ -174,3 +179,17 @@ class SQL_atm:
 
             else:
                 print("Wrong operation. Try another operation!")
+
+    @staticmethod
+    def report_operation_1(now_date, number_card, type_operation, amount, payee):
+        """Operation report"""
+        # now_date, number_card, type_operation, amount, payee
+        user_data = [
+            (now_date, number_card, type_operation, amount, payee)
+        ]
+        with open("report_1.csv", "a", newline='') as file:
+            writer = csv.writer(file, delimiter=";")
+            writer.writerows(
+                user_data
+            )
+        print("Data added to report")

@@ -4,5 +4,6 @@
 - [x] Withdraw money
 - [x] Deposit money
 - [x] Exit
+- [x] Transfer money
 
 Program based on `sqllite3`
