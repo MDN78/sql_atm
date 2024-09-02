@@ -92,6 +92,7 @@ class SQL_atm:
                         f"""UPDATE Users_data SET Balance = Balance - {amount} WHERE Number_card = {number_card};""")
                     db.commit()
                     SQL_atm.info_balance(number_card)
+                    SQL_atm.report_operation_1(now_data, number_card, "1", amount, "")
                     return True
 
             except:
@@ -182,7 +183,10 @@ class SQL_atm:
 
     @staticmethod
     def report_operation_1(now_date, number_card, type_operation, amount, payee):
-        """Operation report"""
+        """Operation report:
+        1. withdraw money
+        2. deposit money
+        3. transfer money"""
         # now_date, number_card, type_operation, amount, payee
         user_data = [
             (now_date, number_card, type_operation, amount, payee)
