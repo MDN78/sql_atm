@@ -189,7 +189,6 @@ class SQL_atm:
         1. withdraw money
         2. deposit money
         3. transfer money"""
-        # now_date, number_card, type_operation, amount, payee
         user_data = [
             (now_date, number_card, type_operation, amount, payee)
         ]
