@@ -92,7 +92,7 @@ class SQL_atm:
                         f"""UPDATE Users_data SET Balance = Balance - {amount} WHERE Number_card = {number_card};""")
                     db.commit()
                     SQL_atm.info_balance(number_card)
-                    SQL_atm.report_operation_1(now_data, number_card, "1", amount, "")
+                    SQL_atm.report_operation_1(now_data, number_card, "2", amount, "")
                     return True
 
             except:
@@ -110,7 +110,7 @@ class SQL_atm:
                     f"""UPDATE Users_data SET Balance = Balance + {amount} WHERE Number_card = {number_card};""")
                 db.commit()
                 SQL_atm.info_balance(number_card)
-                SQL_atm.report_operation_1(now_data, number_card, "2", amount, "")
+                SQL_atm.report_operation_1(now_data, number_card, "3", amount, "")
             except:
                 print("Wrong action with balance")
                 return False
@@ -140,6 +140,8 @@ class SQL_atm:
                                     f"""UPDATE Users_data SET Balance = Balance + {transfer_summ} WHERE Number_card = {account};""")
                                 db.commit()
                                 SQL_atm.info_balance(number_card)
+                                SQL_atm.report_operation_1(now_data, number_card, "2", transfer_summ, account)
+                                SQL_atm.report_operation_2(now_data, account, "3", transfer_summ, number_card)
                                 return True
                         except:
                             print("Wrong action with balance")
@@ -196,4 +198,20 @@ class SQL_atm:
             writer.writerows(
                 user_data
             )
-        print("Data added to report")
+        print("Data added to report sender")
+
+    @staticmethod
+    def report_operation_2(now_date, payee, type_operation, amount, sender):
+        """Operation report:
+        1. withdraw money
+        2. deposit money
+        3. transfer money"""
+        user_data = [
+            (now_date, payee, type_operation, amount, sender)
+        ]
+        with open("report_2.csv", "a", newline='') as file:
+            writer = csv.writer(file, delimiter=";")
+            writer.writerows(
+                user_data
+            )
+        print("Data added to report payee")
