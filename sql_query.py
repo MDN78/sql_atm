@@ -113,32 +113,37 @@ class SQL_atm:
     def transfer_money(number_card):
         """Transfer money between accounts"""
         account = input("Input number card to transfer money: ")
-        result = SQL_atm.input_card(account)
-        if result:
-            transfer_summ = input("Input summ to transfer: ")
-            with sqlite3.connect("atm.db") as db:
-                cur = db.cursor()
-                cur.execute(f"""SELECT Balance FROM Users_data WHERE Number_card = {number_card};""")
-                result_info_balance = cur.fetchone()
-                balance_card = result_info_balance[0]
-                try:
-
-                    if int(transfer_summ) > balance_card:
-                        print("Account has insufficient funds")
-                        return False
-                    else:
-                        cur.execute(
-                            f"""UPDATE Users_data SET Balance = Balance - {transfer_summ} WHERE Number_card = {number_card};""")
-                        cur.execute(
-                            f"""UPDATE Users_data SET Balance = Balance + {transfer_summ} WHERE Number_card = {account};""")
-                        db.commit()
-                        SQL_atm.info_balance(number_card)
-                        return True
-                except:
-                    print("Wrong action with balance")
-                    return False
+        if account != number_card:
+            result = SQL_atm.input_card(account)
+            if result:
+                transfer_summ = input("Input summ to transfer: ")
+                if int(transfer_summ) > 0:
+                    with sqlite3.connect("atm.db") as db:
+                        cur = db.cursor()
+                        cur.execute(f"""SELECT Balance FROM Users_data WHERE Number_card = {number_card};""")
+                        result_info_balance = cur.fetchone()
+                        balance_card = result_info_balance[0]
+                        try:
+                            if int(transfer_summ) > balance_card:
+                                print("Account has insufficient funds")
+                                return False
+                            else:
+                                cur.execute(
+                                    f"""UPDATE Users_data SET Balance = Balance - {transfer_summ} WHERE Number_card = {number_card};""")
+                                cur.execute(
+                                    f"""UPDATE Users_data SET Balance = Balance + {transfer_summ} WHERE Number_card = {account};""")
+                                db.commit()
+                                SQL_atm.info_balance(number_card)
+                                return True
+                        except:
+                            print("Wrong action with balance")
+                            return False
+                else:
+                    print("Input correct summ to transfer!")
+            else:
+                print("There is no user with this card number!")
         else:
-            print("There is no user with this card number!")
+            print("Input another user's card number!")
 
     @staticmethod
     def input_operation(number_card):
